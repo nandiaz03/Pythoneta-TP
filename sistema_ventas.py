@@ -46,7 +46,7 @@ def reportes_ventas_mes(mes:int)->None:
     postcondicion: muestra el total acumulado del mes"""
     print("Esta funcion muestra el total del mes")
 
-def cargar_producto_carrito(producto: str, cantidad: int)->None:
+def cargar_producto_carrito(codigo_producto: int, cantidad: int)->None:
     """agregar un producto disponible al carrito de compra
     precondicion: producto debe ser un string no vacio. cantidad debe ser mayor a 0 y menor igual al stock disponible.
     postcondicion: el producto se suma al carrito"""
@@ -134,7 +134,7 @@ def menu_cajero()->None:
     while opcion != "0":
         opcion = input("Ingrese una opcion: ")
         if opcion == "1": 
-            cargar_producto_carrito(producto, cantidad)
+            cargar_producto_carrito(codigo_producto, cantidad)
             total = calcular_total_compra (subtotal)
             medio = tipo_de_pago(opcion)
             if medio == 1: 
