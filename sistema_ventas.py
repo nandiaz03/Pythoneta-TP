@@ -58,17 +58,21 @@ def calcular_total_compra(subtotal: float)->float:
     postcondicones: retorna el valor total de la venta"""
     print("Esta funcion calcula el total de la compra")
 
+def tipo_de_pago(opcion:int)->int:
+    """define el medio de pago seleccionado por el cliente
+    precondicion: opcion debe ser numero entero 1 (efectico) o 2 (tarjeta/billetera virtual)
+    postcondicion: Retorna el nombre del metodo de pago"""
+    print("Esta funcion retorna que tipo de pago fue")
+
 def cerrar_venta(confirmacion:int)->bool: 
     """confirma si se concreta la venta  si se reseta la compra
     precondicion: confirmacion debe ser 1 (si) o 0 (no)
     postcondicion: retorna True si se confirma, False si se cancela o vuelve"""
     print("Esta funcion confirma/cancela la venta")
 
-def tipo_de_pago(opcion:int)->str:
-    """define el medio de pago seleccionado por el cliente
-    precondicion: opcion debe ser numero entero 1 (efectico) o 2 (tarjeta/billetera virtual)
-    postcondicion: Retorna el nombre del metodo de pago"""
-    print("Esta funcion retorna que tipo de pago fue")
+def validar_monto():
+    """Validar el monto del cliente"""
+    pass
 
 def calcular_vuelto(total:float, pago:float)->float:
     """si es en efectivo, calcula el vuelto y la cantidad a devolver del cliente
