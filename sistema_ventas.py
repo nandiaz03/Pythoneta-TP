@@ -52,7 +52,7 @@ def cargar_producto_carrito(codigo_producto: int, cantidad: int)->None:
     postcondicion: el producto se suma al carrito"""
     print("Esta funcion permite agregar producto al carrito")
 
-def calcular_total_compra(subtotal: int)->int:
+def calcular_total_compra(subtotal: float)->float:
     """calcula el precio final a cobrar de la compra actual
     precondicion: subtotal debe ser mayor igual a 0
     postcondicones: retorna el valor total de la venta"""
@@ -70,7 +70,7 @@ def tipo_de_pago(opcion:int)->str:
     postcondicion: Retorna el nombre del metodo de pago"""
     print("Esta funcion retorna que tipo de pago fue")
 
-def calcular_vuelto(total:int, pago:int)->int:
+def calcular_vuelto(total:float, pago:float)->float:
     """si es en efectivo, calcula el vuelto y la cantidad a devolver del cliente
     precondicion: pago debe ser mayor a total
     postcondicion: retorna el monto a devolver en billetes"""
@@ -82,7 +82,7 @@ def descontar_uni(producto:str, cantidad:int)->None:
     postcondicion: actualiza el stock cargado"""
     print("La funcion actualiza el stock cargado")
 
-def emision_ticket(total:int, medio_pago:str)->None:
+def emision_ticket(total:float, medio_pago:str)->None:
     """ imprime el comproante final del operacion
     percondicion: total debe ser mayor a 0 y medio_pago debe ser efectivo o tarjeta/billetera
     postcondicion: muestra el ticket emitido en pantalla"""
