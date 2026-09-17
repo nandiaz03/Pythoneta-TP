@@ -16,8 +16,6 @@ def definir_rol(rol: str)->str:
     postcondición: retorna la ruta del menu correspondiente"""
     print("Esta funcion deriva el rol de admin o usuario")
 
-#Admin
-
 def consultar_stock(seccion: str)->None:
     """muestra los productos de una seccion o faltante de stock
     precondición: seccion debe ser una seccion valida o sin stock o poco stock
@@ -47,8 +45,6 @@ def reportes_ventas_mes(mes:int)->None:
     precondicion: mes debe ser un numero entre 1 y 12
     postcondicion: muestra el total acumulado del mes"""
     print("Esta funcion muestra el total del mes")
-
-#Cajero
 
 def cargar_producto_carrito(producto: str, cantidad: int)->None:
     """agregar un producto disponible al carrito de compra
@@ -92,8 +88,6 @@ def emision_ticket(total:int, medio_pago:str)->None:
     postcondicion: muestra el ticket emitido en pantalla"""
     print("Esta funcion imprime un ticket de la compra finalizada")
     
-#menu y navegacion 
-
 def opcion_admin()->None:
     """imprime las opciones que el admin puede ejecutar"""
     print("\n================================================")
