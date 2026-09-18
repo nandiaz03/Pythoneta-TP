@@ -142,6 +142,7 @@ def opcion_cajero()->None:
 
 def menu_cajero()->None:
     cajero_fecha(dia, mes, anio)
+    registrar_apertura_caja(saldo_base)
     opcion = "-1" 
     while opcion != "0":
         opcion = input("Ingrese una opcion: ")
