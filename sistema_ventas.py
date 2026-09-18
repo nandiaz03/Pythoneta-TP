@@ -1,8 +1,33 @@
+# ========================================================
+# SISTEMA DE COMERCIO Y VENTAS
+#=========================================================
+usuarios = {
+    'nandiaz': {'clave': '1234', 'rol':'admin'},
+    'ibattelli':{'clave': '4321', 'rol': 'cajero'}
+    }
+
+#-----------------------------------------------------------
+#                       LOGIN Y ROLES
+#-----------------------------------------------------------
+def pedir_credenciales() -> tuple:
+    """solicita usuario y clave 
+    precondicion: no tiene
+    postcondicion: retorna una tupla (usuario, clave)"""
+    usuario = input("ingresar usuario: ").strip()
+    clave = input("ingresar contraseña: ").strip()
+    return usuario, clave
+
 def iniciar_sesion(usuario:str, clave:int) -> bool:
     """verificacion de usuario y clave
     precondicion: al ingresar usuario no debe estar vacio y clave debe ser un numero entero de 4 digitos posivos
-       postcondicion: retornar true si el acceso es correcto"""
+    postcondicion: retornar true si el acceso es correcto"""
     print("Esta funcion permite ingresar el usuario")
+
+def definir_rol(rol: str)->str: 
+    """ determina a que menu debe redirigirse el usuario
+    precondión: rol debe ser admin o cajero
+    postcondición: retorna la ruta del menu correspondiente"""
+    print("Esta funcion deriva el rol de admin o usuario")
 
 def cajero_fecha(dia:int, mes:int, anio:int)->bool:
     """solicita y valida la fecha en la que opera el cajero
@@ -10,11 +35,21 @@ def cajero_fecha(dia:int, mes:int, anio:int)->bool:
     postcondición: retorna True si la fecha es valida"""
     print("Esta función valida la fecha")
 
-def definir_rol(rol: str)->str: 
-    """ determina a que menu debe redirigirse el usuario
-    precondión: rol debe ser admin o cajero
-    postcondición: retorna la ruta del menu correspondiente"""
-    print("Esta funcion deriva el rol de admin o usuario")
+def registrar_apertura_caja(saldo_base: float)->bool:
+    """ solicita al usuario el saldo inicial de efectivo disponible al inicio de turno
+    precondicion: saldo_base debe ser un numero mayor o igual a 0 
+    postcondicion: retorna True si el saldo base es valido"""
+    print("Esta funcion registra y valia el saldo inicial del turno")
+
+def cierre_caja(saldo_final: float, saldo_base: float)->float:
+    """Calcula y registra el efectivo final de caja al cerrar el turno
+    precondicion: saldo_final debe ser un numero mayor o igual a 0 
+    postcondicion: retorna la diferencia entre el saldo final y el saldo base registrado"""
+    print("Esta funcion registra el cierre de caja calculo la diferencia con el saldo base")
+
+#-----------------------------------------------------------
+#                                 STOCK
+#-----------------------------------------------------------
 
 def consultar_stock(seccion: str)->None:
     """muestra los productos de una seccion o faltante de stock
@@ -34,6 +69,16 @@ def eliminar_stock(producto: str, cantidad:int)->None:
     postcondicion: reduce el stock del producto"""
     print("Esta funcion elimina productos del stock")
 
+def descontar_uni(producto:str, cantidad:int)->None:
+    """resta las unidades vendidas del stock una vez cerrada la compra
+    precondicion: producto debe existir en el stock y cantidad debe ser menor o igual al stock registrado
+    postcondicion: actualiza el stock cargado"""
+    print("La funcion actualiza el stock cargado")
+
+#-----------------------------------------------------------
+#                                 REPORTES
+#-----------------------------------------------------------
+
 def reporte_ventas_dia(dia:int)->None:
     """calcula y muestra la recaudacion del dia
     precondicion: dia debe ser una fecha valida del numero entero positivo
@@ -46,11 +91,9 @@ def reportes_ventas_mes(mes:int)->None:
     postcondicion: muestra el total acumulado del mes"""
     print("Esta funcion muestra el total del mes")
 
-def registrar_apertura_caja(saldo_base: float)->bool:
-    """ solicita al usuario el saldo inicial de efectivo disponible al inicio de turno
-    precondicion: saldo_base debe ser un numero mayor o igual a 0 
-    postcondicion: retorna True si el saldo base es valido"""
-    print("Esta funcion registra y valia el saldo inicial del turno")
+#-----------------------------------------------------------
+#                                 VENTA
+#-----------------------------------------------------------
 
 def cargar_producto_carrito(codigo_producto: int, cantidad: int)->None:
     """agregar un producto disponible al carrito de compra
@@ -70,36 +113,34 @@ def tipo_de_pago(opcion:int)->int:
     postcondicion: Retorna el nombre del metodo de pago"""
     print("Esta funcion retorna que tipo de pago fue")
 
-def cerrar_venta(confirmacion:int)->bool: 
-    """confirma si se concreta la venta  si se reseta la compra
-    precondicion: confirmacion debe ser 1 (si) o 0 (no)
-    postcondicion: retorna True si se confirma, False si se cancela o vuelve"""
-    print("Esta funcion confirma/cancela la venta")
-
 def validar_monto(monto: float, total: float)->bool:
     """Validar el monto entregado por el cliente
     precondicion: monto debe ser un numero positivo y mayor igual al total
     postcondicion: retorna True si el monto es valido y Falso en caso contrario"""
     print("Esta funcion valida si el monto entregado es correcto")
-
+    
 def calcular_vuelto(total:float, pago:float)->float:
     """si es en efectivo, calcula el vuelto y la cantidad a devolver del cliente
     precondicion: pago debe ser mayor a total
     postcondicion: retorna el monto a devolver en billetes"""
     print("Esta funcion realiza el calculo del vuelto")
 
-def descontar_uni(producto:str, cantidad:int)->None:
-    """resta las unidades vendidas del stock una vez cerrada la compra
-    precondicion: producto debe existir en el stock y cantidad debe ser menor o igual al stock registrado
-    postcondicion: actualiza el stock cargado"""
-    print("La funcion actualiza el stock cargado")
+def cerrar_venta(confirmacion:int)->bool: 
+    """confirma si se concreta la venta  si se reseta la compra
+    precondicion: confirmacion debe ser 1 (si) o 0 (no)
+    postcondicion: retorna True si se confirma, False si se cancela o vuelve"""
+    print("Esta funcion confirma/cancela la venta")
 
 def emision_ticket(total:float, medio_pago:str)->None:
     """ imprime el comproante final del operacion
     percondicion: total debe ser mayor a 0 y medio_pago debe ser efectivo o tarjeta/billetera
     postcondicion: muestra el ticket emitido en pantalla"""
     print("Esta funcion imprime un ticket de la compra finalizada")
-    
+
+#-----------------------------------------------------------
+#                       MENÚ ADMINISTRADOR
+#-----------------------------------------------------------
+
 def opcion_admin()->None:
     """imprime las opciones que el admin puede ejecutar"""
     print("\n================================================")
@@ -118,20 +159,31 @@ def menu_admin()->None:
         opcion_admin()
         opcion = input("Ingrese una opcion: ")
         if opcion == "1": 
+            seccion = input("Ingrese la seccion: ")
             consultar_stock(seccion)
         elif opcion == "2": 
+            producto = input("producto: ")
+            cantidad = input("cantidad: ")
             agregar_stock(producto, cantidad)
         elif opcion == "3":
+            producto = input("producto: ")
+            cantidad = input("cantidad: ")
             eliminar_stock(producto, cantidad)
         elif opcion == "4": 
+            dia = int(input("Dia: "))
             reporte_ventas_dia(dia) 
         elif opcion == "5":
+            mes = int(input("Mes: "))
             reportes_ventas_mes(mes)
         elif opcion == "0":
             print("Cerrando sesion de administrador...")
         else: 
             print("Opcion no valida")
-        
+
+#-----------------------------------------------------------
+#                       MENÚ CAJERO
+#-----------------------------------------------------------
+
 def opcion_cajero()->None:
     """imprime las opciones que el cajero puede ejecutar"""
     print("\n================================================")
@@ -140,9 +192,10 @@ def opcion_cajero()->None:
     print("1. Iniciar nueva venta")
     print("0. Cerrar turno")
 
+cajero_fecha(dia, mes, anio)
+registrar_apertura_caja(saldo_base)
+
 def menu_cajero()->None:
-    cajero_fecha(dia, mes, anio)
-    registrar_apertura_caja(saldo_base)
     opcion = "-1" 
     while opcion != "0":
         opcion = input("Ingrese una opcion: ")
@@ -158,8 +211,13 @@ def menu_cajero()->None:
                 emision_ticket(total, medio)
         elif opcion == "0":
             print("Cerrando turno de caja...")
+            cierre_caja(saldo_base, saldo_final)
         else: 
             print("Opcion no valida")
+
+#-----------------------------------------------------------
+#                       LOGIN PRINCIPAL
+#----------------------------------------------------------- 
 
 def principal_opciones()->None: 
     "imprime el inicion de sesion al sitema"
@@ -171,19 +229,36 @@ def principal_opciones()->None:
     print("0. Salir")
     
 def derivar_usuario()->None:
-    "verificar la opcion ingresada y lo deriva al usuario corresponinte"
+    "verificar la opcion ingresada y lo deriva al menu corresponinte"
     opcion = "-1"
     while opcion != "0":
         principal_opciones()
-        opcion = input("Ingrese una opcion: ")
-        if opcion == "1":
-            iniciar_sesion(usuario, clave)
-            rol = definir_rol(rol)
-            menu_admin()
-        elif opcion == "2":
-            iniciar_sesion(usuario, clave)
-            rol = definir_rol(rol)
-            menu_cajero()
+        opcion = input("Ingrese una opcion: ").strip()
+        if opcion == "1" or opcion == "2":
+            if opcion == "1":
+                rol_solicitado = 'admin'
+            else:
+                rol_solicitado = 'cajero'
+        
+            usuario,clave = pedir_credenciales()
+            if not iniciar_sesion(usuario, clave):
+                print("usuario o contraseña incorrectos")
+                continue
+            
+            rol = definir_rol(usuarios[usuario]['rol'])
+            if rol != rol_solicitado: 
+                print("el usuario" + usuario + "no tiene permisos de" + rol_pedido)
+                continue
+            else:
+                print("Bienvenido" + usuario + "!")
+            
+            if rol == 'admin':
+                opcion_admin()
+                menu_admin()
+            else: 
+                opcion_cajero()
+                menu_cajero
+            
         elif opcion == "0":
             print("saliendo del sistema...")
         else: 
