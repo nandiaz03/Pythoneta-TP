@@ -179,6 +179,7 @@ def derivar_usuario()->None:
         if opcion == "1":
             iniciar_sesion(usuario, clave)
             rol = definir_rol(rol)
+            menu_admin()
         elif opcion == "2":
             iniciar_sesion(usuario, clave)
             rol = definir_rol(rol)
