@@ -108,18 +108,21 @@ def calcular_total_compra(subtotal: float)->float:
     precondicion: subtotal debe ser mayor igual a 0
     postcondicones: retorna el valor total de la venta"""
     print("Esta funcion calcula el total de la compra")
+    return subtotal
 
 def tipo_de_pago(medio_de_pago:int)->int:
     """define el medio de pago seleccionado por el cliente
     precondicion: opcion debe ser numero entero 1 (efectico) o 2 (tarjeta/billetera virtual)
     postcondicion: Retorna el nombre del metodo de pago"""
     print("Esta funcion retorna que tipo de pago fue")
+    return medio_de_pago
 
 def validar_monto(monto: float, total: float)->bool:
     """Validar el monto entregado por el cliente
     precondicion: monto debe ser un numero positivo y mayor igual al total
     postcondicion: retorna True si el monto es valido y Falso en caso contrario"""
     print("Esta funcion valida si el monto entregado es correcto")
+    return True
     
 def calcular_vuelto(total:float, pago:float)->float:
     """si es en efectivo, calcula el vuelto y la cantidad a devolver del cliente
@@ -132,6 +135,7 @@ def cerrar_venta(confirmacion:int)->bool:
     precondicion: confirmacion debe ser 1 (si) o 0 (no)
     postcondicion: retorna True si se confirma, False si se cancela o vuelve"""
     print("Esta funcion confirma/cancela la venta")
+    return confirmacion == 1 
 
 def emision_ticket(total:float, medio_pago:str)->None:
     """ imprime el comproante final del operacion
