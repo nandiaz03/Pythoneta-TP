@@ -21,13 +21,15 @@ def iniciar_sesion(usuario:str, clave:int) -> bool:
     """verificacion de usuario y clave
     precondicion: al ingresar usuario no debe estar vacio y clave debe ser un numero entero de 4 digitos posivos
     postcondicion: retornar true si el acceso es correcto"""
-    print("Esta funcion permite ingresar el usuario")
+    if usuario in usuarios and usuarios[usuario]['clave'] == clave:
+        return True
+    return False
 
 def definir_rol(rol: str)->str: 
     """ determina a que menu debe redirigirse el usuario
     precondión: rol debe ser admin o cajero
     postcondición: retorna la ruta del menu correspondiente"""
-    print("Esta funcion deriva el rol de admin o usuario")
+    return rol
 
 def cajero_fecha(dia:int, mes:int, anio:int)->bool:
     """solicita y valida la fecha en la que opera el cajero
@@ -154,7 +156,7 @@ def opcion_admin()->None:
     print("0. Volver al login")
     
 def menu_admin()->None:
-    opcion != "-1"
+    opcion = "-1"
     while opcion != "0":
         opcion_admin()
         opcion = input("Ingrese una opcion: ")
@@ -192,26 +194,33 @@ def opcion_cajero()->None:
     print("1. Iniciar nueva venta")
     print("0. Cerrar turno")
 
-cajero_fecha(dia, mes, anio)
-registrar_apertura_caja(saldo_base)
-
 def menu_cajero()->None:
+    saldo_base = float(input("Saldo inicial: "))
+    cajero_fecha(dia=18, mes=9, anio=2026)
+    registrar_apertura_caja(saldo_base) 
     opcion = "-1" 
     while opcion != "0":
         opcion = input("Ingrese una opcion: ")
         if opcion == "1": 
+            codigo_producto = int(input("Codigo de producto: "))
+            cantidad = int(input("Cantidad: "))
             cargar_producto_carrito(codigo_producto, cantidad)
+            subtotal = float(input("subtotal: "))
             total = calcular_total_compra (subtotal)
+            medio_de_pago = int(input("medio de pago (1- efectivo, 2- tarjeta/billetera virtual): ")) 
             medio = tipo_de_pago(opcion)
             if medio == 1: 
+                pago = float(input("Monto: "))
                 calcular_vuelto(total, pago)
+                confirmacion = int(input("confirmar venta (1- si, 0- no): ")) 
             confirmado = cerrar_venta(confirmacion)
             if confirmado == True: 
+                producto = input("producto vendido: ")
                 descontar_uni(producto, cantidad)
                 emision_ticket(total, medio)
         elif opcion == "0":
             print("Cerrando turno de caja...")
-            cierre_caja(saldo_base, saldo_final)
+            cierre_caja(saldo_base, saldo_final = 10_000)
         else: 
             print("Opcion no valida")
 
@@ -227,6 +236,7 @@ def principal_opciones()->None:
     print("1. Iniciar sesion como administrador")
     print("2. Iniciar sesion como cajero")
     print("0. Salir")
+    
     
 def derivar_usuario()->None:
     "verificar la opcion ingresada y lo deriva al menu corresponinte"
@@ -247,7 +257,7 @@ def derivar_usuario()->None:
             
             rol = definir_rol(usuarios[usuario]['rol'])
             if rol != rol_solicitado: 
-                print("el usuario" + usuario + "no tiene permisos de" + rol_pedido)
+                print("el usuario" + usuario + "no tiene permisos de" + rol_solicitado)
                 continue
             else:
                 print("Bienvenido" + usuario + "!")
@@ -264,5 +274,5 @@ def derivar_usuario()->None:
         else: 
             print("Opcion incorrecta.")
 
-principal_opciones()
+derivar_usuario()
 
