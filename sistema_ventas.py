@@ -46,6 +46,12 @@ def reportes_ventas_mes(mes:int)->None:
     postcondicion: muestra el total acumulado del mes"""
     print("Esta funcion muestra el total del mes")
 
+def registrar_apertura_caja(saldo_base: float)->bool:
+    """ solicita al usuario el saldo inicial de efectivo disponible al inicio de turno
+    precondicion: saldo_base debe ser un numero mayor o igual a 0 
+    postcondicion: retorna True si el saldo base es valido"""
+    print("Esta funcion registra y valia el saldo inicial del turno")
+
 def cargar_producto_carrito(codigo_producto: int, cantidad: int)->None:
     """agregar un producto disponible al carrito de compra
     precondicion: producto debe ser un string no vacio. cantidad debe ser mayor a 0 y menor igual al stock disponible.
@@ -70,9 +76,11 @@ def cerrar_venta(confirmacion:int)->bool:
     postcondicion: retorna True si se confirma, False si se cancela o vuelve"""
     print("Esta funcion confirma/cancela la venta")
 
-def validar_monto():
-    """Validar el monto del cliente"""
-    pass
+def validar_monto(monto: float, total: float)->bool:
+    """Validar el monto entregado por el cliente
+    precondicion: monto debe ser un numero positivo y mayor igual al total
+    postcondicion: retorna True si el monto es valido y Falso en caso contrario"""
+    print("Esta funcion valida si el monto entregado es correcto")
 
 def calcular_vuelto(total:float, pago:float)->float:
     """si es en efectivo, calcula el vuelto y la cantidad a devolver del cliente
@@ -102,7 +110,7 @@ def opcion_admin()->None:
     print("3. Eliminar/Modificar Stock")
     print("4. Reporte de Ventas del dia")
     print("5. Reporte de ventas del mes")
-    print("Volver al login")
+    print("0. Volver al login")
     
 def menu_admin()->None:
     opcion != "-1"
@@ -118,7 +126,7 @@ def menu_admin()->None:
         elif opcion == "4": 
             reporte_ventas_dia(dia) 
         elif opcion == "5":
-            reporte_ventas_mes(mes)
+            reportes_ventas_mes(mes)
         elif opcion == "0":
             print("Cerrando sesion de administrador...")
         else: 
@@ -133,7 +141,7 @@ def opcion_cajero()->None:
     print("0. Cerrar turno")
 
 def menu_cajero()->None:
-    cajero_fecha(fecha)
+    cajero_fecha(dia, mes, anio)
     opcion = "-1" 
     while opcion != "0":
         opcion = input("Ingrese una opcion: ")
@@ -164,15 +172,15 @@ def principal_opciones()->None:
 def derivar_usuario()->None:
     "verificar la opcion ingresada y lo deriva al usuario corresponinte"
     opcion = "-1"
-    while opcion != o:
+    while opcion != "0":
         principal_opciones()
-        opcion = int("Ingrese una opcion: ")
+        opcion = input("Ingrese una opcion: ")
         if opcion == "1":
             iniciar_sesion(usuario, clave)
-            rol = derivar_rol(rol)
+            rol = definir_rol(rol)
         elif opcion == "2":
             iniciar_sesion(usuario, clave)
-            rol = derivar_rol(rol)
+            rol = definir_rol(rol)
             menu_cajero()
         elif opcion == "0":
             print("saliendo del sistema...")
