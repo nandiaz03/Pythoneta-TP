@@ -43,7 +43,7 @@ def registrar_apertura_caja(saldo_base: float)->bool:
     postcondicion: retorna True si el saldo base es valido"""
     print("Esta funcion registra y valia el saldo inicial del turno")
 
-def cierre_caja(saldo_final: float, saldo_base: float)->float:
+def cierre_caja(saldo_base: float, saldo_final: float)->float:
     """Calcula y registra el efectivo final de caja al cerrar el turno
     precondicion: saldo_final debe ser un numero mayor o igual a 0 
     postcondicion: retorna la diferencia entre el saldo final y el saldo base registrado"""
@@ -109,7 +109,7 @@ def calcular_total_compra(subtotal: float)->float:
     postcondicones: retorna el valor total de la venta"""
     print("Esta funcion calcula el total de la compra")
 
-def tipo_de_pago(opcion:int)->int:
+def tipo_de_pago(medio_de_pago:int)->int:
     """define el medio de pago seleccionado por el cliente
     precondicion: opcion debe ser numero entero 1 (efectico) o 2 (tarjeta/billetera virtual)
     postcondicion: Retorna el nombre del metodo de pago"""
@@ -200,27 +200,36 @@ def menu_cajero()->None:
     registrar_apertura_caja(saldo_base) 
     opcion = "-1" 
     while opcion != "0":
-        opcion = input("Ingrese una opcion: ")
+        opcion_cajero()
+        opcion = input("Ingrese una opcion: ").strip()
         if opcion == "1": 
             codigo_producto = int(input("Codigo de producto: "))
             cantidad = int(input("Cantidad: "))
             cargar_producto_carrito(codigo_producto, cantidad)
+            
             subtotal = float(input("subtotal: "))
             total = calcular_total_compra (subtotal)
+            
             medio_de_pago = int(input("medio de pago (1- efectivo, 2- tarjeta/billetera virtual): ")) 
-            medio = tipo_de_pago(opcion)
+            medio = tipo_de_pago(medio_de_pago)
+            
             if medio == 1: 
                 pago = float(input("Monto: "))
                 calcular_vuelto(total, pago)
-                confirmacion = int(input("confirmar venta (1- si, 0- no): ")) 
+                
+            confirmacion = int(input("confirmar venta (1- si, 0- no): ")) 
             confirmado = cerrar_venta(confirmacion)
+            
             if confirmado == True: 
                 producto = input("producto vendido: ")
                 descontar_uni(producto, cantidad)
                 emision_ticket(total, medio)
+            else: 
+                print("venta cancelada...")
         elif opcion == "0":
+            saldo_final = float(input("Efectivo contado en caja: "))
+            cierre_caja(saldo_base, saldo_final)
             print("Cerrando turno de caja...")
-            cierre_caja(saldo_base, saldo_final = 10_000)
         else: 
             print("Opcion no valida")
 
@@ -263,11 +272,9 @@ def derivar_usuario()->None:
                 print("Bienvenido" + usuario + "!")
             
             if rol == 'admin':
-                opcion_admin()
                 menu_admin()
             else: 
-                opcion_cajero()
-                menu_cajero
+                menu_cajero()
             
         elif opcion == "0":
             print("saliendo del sistema...")
