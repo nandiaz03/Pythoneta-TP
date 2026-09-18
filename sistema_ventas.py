@@ -169,11 +169,11 @@ def menu_admin()->None:
             consultar_stock(seccion)
         elif opcion == "2": 
             producto = input("producto: ")
-            cantidad = input("cantidad: ")
+            cantidad = int(input("cantidad: "))
             agregar_stock(producto, cantidad)
         elif opcion == "3":
             producto = input("producto: ")
-            cantidad = input("cantidad: ")
+            cantidad = int(input("cantidad: "))
             eliminar_stock(producto, cantidad)
         elif opcion == "4": 
             dia = int(input("Dia: "))
@@ -270,10 +270,10 @@ def derivar_usuario()->None:
             
             rol = definir_rol(usuarios[usuario]['rol'])
             if rol != rol_solicitado: 
-                print("el usuario" + usuario + "no tiene permisos de" + rol_solicitado)
+                print(f"el usuario {usuario} no tiene permisos de {rol_solicitado}")
                 continue
             else:
-                print("Bienvenido" + usuario + "!")
+                print(f"Bienvenido {usuario}!")
             
             if rol == 'admin':
                 menu_admin()
