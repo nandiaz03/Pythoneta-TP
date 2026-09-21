@@ -22,6 +22,7 @@ def iniciar_sesion(usuario:str, clave:int) -> bool:
     precondicion: al ingresar usuario no debe estar vacio y clave debe ser un numero entero de 4 digitos posivos
     postcondicion: retornar true si el acceso es correcto"""
     if usuario in usuarios and usuarios[usuario]['clave'] == clave:
+        """get tenerlo en cuenta"""
         return True
     return False
 
@@ -35,6 +36,7 @@ def cajero_fecha(dia:int, mes:int, anio:int)->bool:
     """solicita y valida la fecha en la que opera el cajero
     precondición: fecha debe ser un entero positivo 
     postcondición: retorna True si la fecha es valida"""
+    """usar tupla"""
     print("Esta función valida la fecha")
 
 def registrar_apertura_caja(saldo_base: float)->bool:
@@ -224,7 +226,7 @@ def menu_cajero()->None:
             confirmacion = int(input("confirmar venta (1- si, 0- no): ")) 
             confirmado = cerrar_venta(confirmacion)
             
-            if confirmado == True: 
+            if confirmado: 
                 producto = input("producto vendido: ")
                 descontar_uni(producto, cantidad)
                 emision_ticket(total, medio)
@@ -252,6 +254,7 @@ def principal_opciones()->None:
     
     
 def derivar_usuario()->None:
+    """llamarla main"""
     "verificar la opcion ingresada y lo deriva al menu corresponinte"
     opcion = "-1"
     while opcion != "0":
@@ -263,7 +266,7 @@ def derivar_usuario()->None:
             else:
                 rol_solicitado = 'cajero'
         
-            usuario,clave = pedir_credenciales()
+            usuario, clave = pedir_credenciales()
             if not iniciar_sesion(usuario, clave):
                 print("usuario o contraseña incorrectos")
                 continue
