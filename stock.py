@@ -122,7 +122,7 @@ def descontar_uni(producto: str, cantidad: int) -> None:
 
     Precondicion:
         - producto es un string que indica que producto del archivo 'productos.json'}
-        - cantidad des un entero que indica la cantidad de stock que se le debe.
+        - cantidad es un entero que indica la cantidad de stock que se le debe.
 
     Postcondicion:
         - Actualiza el archivo json descontando del producto indicado el stock equivalente a la venta realizada.
@@ -130,7 +130,7 @@ def descontar_uni(producto: str, cantidad: int) -> None:
     """
     f = leer_archivo("productos.json")
     for dic in f:
-        if producto == dic["Nombre"]:
+        if producto == dic["ID"]:
             dic["Stock"] -= cantidad            
             escribir_archivo("productos.json", f)
             break
