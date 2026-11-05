@@ -1,0 +1,18 @@
+{
+    "nandiaz": {
+        "clave": "1234",
+        "rol": "admin"
+    },
+    "ibattelli": {
+        "clave": "4321",
+        "rol": "cajero"
+    },
+    "agallarati": {
+        "clave": "5678",
+        "rol": "cajero"
+    },
+    "vguarachi": {
+        "clave": "8765",
+        "rol": "cajero"
+    }
+}

@@ -1,5 +1,4 @@
-from sistema_ventas import leer_archivo
-from sistema_ventas import escribir_archivo
+from archivos import leer_archivo, escribir_archivo
 
 def consultar_stock(seccion: str) -> None:
     """

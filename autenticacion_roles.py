@@ -1,5 +1,5 @@
 from datetime import date
-from sistema_ventas import leer_archivo, escribir_archivo
+from archivos import leer_archivo, escribir_archivo
 
 RUTA_USUARIOS = "usuarios.json"
 RUTA_TURNO = "turno_caja.json"
