@@ -167,7 +167,6 @@ def menu_cajero()->None:
 #----------------------------------------------------------- 
 
 def principal_opciones()->None: 
-    limpiar_pantalla()
     "imprime el inicion de sesion al sitema"
     print(Fore.LIGHTCYAN_EX + "\n================================================") 
     print(Fore.CYAN + "           SISTEMA DE COMERCIO Y VENTAS            ") 
@@ -210,6 +209,7 @@ def main()->None:
             
         elif opcion == "0":
             print(Fore.BLUE + "saliendo del sistema...")
+            limpiar_pantalla()
         else: 
             print(Fore.RED + "Opcion incorrecta.")
 
