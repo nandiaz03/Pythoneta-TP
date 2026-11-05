@@ -3,29 +3,6 @@
 import json
 from sistema_ventas import leer_archivo, escribir_archivo, descontar_uni
 
-def abrir_json() -> list[dict]:
-    """
-    Lee el archivo "productos.json" y devuelve su contenido.
-
-    Contrato:
-        Pre:  - Ninguna (si el archivo no existe se maneja el error).
-              - Si existe, "productos.json" debe ser un JSON válido con una
-                lista de diccionarios, cada uno con las claves "ID", "Nombre",
-                "Precio" y "Stock".
-        Post: - Devuelve la lista de productos cargada desde el archivo.
-              - Devuelve una lista vacía si el archivo no existe.
-    """
-    try:
-        # Se abre con utf-8-sig para tolerar archivos guardados con BOM
-        with open("productos.json", "r", encoding="utf-8-sig") as p:
-            productos = json.load(p)
-
-    except FileNotFoundError:
-        # Si no hay archivo, se trabaja con un catálogo vacío
-        productos = []
-
-    return productos
-
 def buscar_producto(productos: list[dict], ID_producto: str) -> bool:
     """
     Indica si existe un producto con el ID dado.
