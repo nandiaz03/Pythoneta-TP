@@ -12,6 +12,11 @@
     {
         "fecha": "2026-11-05",
         "total": 3200.0,
-        "metodo": "Tarjeta de D\u00e9bito/Cr\u00e9dito"
+        "metodo": "Tarjeta de Débito/Crédito"
+    },
+    {
+        "fecha": "2026-11-05",
+        "total": 18000.0,
+        "metodo": "Tarjeta de Débito/Crédito"
     }
 ]

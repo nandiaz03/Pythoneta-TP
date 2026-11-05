@@ -132,4 +132,82 @@ def descontar_uni(producto: str, cantidad: int) -> None:
         if producto == dic["ID"]:
             dic["Stock"] = max(0, dic["Stock"] - cantidad)
             escribir_archivo(RUTA_PRODUCTOS, f)
-            break
+            break
+
+def _generar_id(productos: list[dict]) -> str:
+    """Devuelve el próximo ID libre con formato P001, P002, ..."""
+    numeros = [int(d["ID"][1:]) for d in productos
+               if d["ID"][1:].isdigit()]
+    return f"P{max(numeros, default=0) + 1:03d}"
+
+
+def agregar_producto(nombre: str) -> None:
+    """
+    Contrato:
+        - Permite dar de alta un producto nuevo en el catálogo.
+
+    Precondicion:
+        - nombre es un string no vacío con el nombre del producto nuevo.
+
+    Postcondicion:
+        - Pide por consola la sección, el precio y el stock inicial.
+        - Agrega al archivo 'productos.json' el producto con un ID generado automáticamente
+          (ID, Nombre, Seccion, Precio, Stock).
+        - Si el nombre está vacío o ya existe un producto con ese nombre, informa el error
+          y no modifica el archivo.
+    """
+    nombre = nombre.strip()
+    if not nombre:
+        print("El nombre no puede estar vacío.")
+        return
+
+    f = leer_archivo(RUTA_PRODUCTOS)
+    for dic in f:
+        if dic["Nombre"].lower() == nombre.lower():
+            print(f"Ya existe un producto llamado {dic['Nombre']} (ID {dic['ID']}). "
+                  "Use 'Agregar Stock' para sumarle unidades.")
+            return
+
+    seccion = ""
+    while not seccion:
+        seccion = input("Sección: ").strip()
+        if not seccion:
+            print("La sección no puede estar vacía.")
+
+    # Si la sección ya existe con otra capitalización, se reutiliza esa (ej. "lacteos" -> "Lacteos")
+    for dic in f:
+        if dic["Seccion"].lower() == seccion.lower():
+            seccion = dic["Seccion"]
+            break
+
+    while True:
+        try:
+            precio = float(input("Precio: ").strip().replace(",", "."))
+            if precio <= 0:
+                print("Error, el precio debe ser mayor a 0.")
+                continue
+            break
+        except ValueError:
+            print("El precio debe ser un número.")
+
+    while True:
+        try:
+            stock = int(input("Stock inicial: ").strip())
+            if stock < 0:
+                print("Error, el stock no puede ser negativo.")
+                continue
+            break
+        except ValueError:
+            print("El stock debe ser un número entero.")
+
+    nuevo = {
+        "ID": _generar_id(f),
+        "Nombre": nombre,
+        "Seccion": seccion,
+        "Precio": precio,
+        "Stock": stock
+    }
+    f.append(nuevo)
+    escribir_archivo(RUTA_PRODUCTOS, f)
+    print(f"Producto agregado: {nuevo['Nombre']} (ID {nuevo['ID']}, {nuevo['Seccion']}, "
+          f"${nuevo['Precio']:.2f}, stock {nuevo['Stock']}).")

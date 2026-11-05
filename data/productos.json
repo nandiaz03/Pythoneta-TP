@@ -4,7 +4,7 @@
         "Nombre": "Leche",
         "Seccion": "Lacteos",
         "Precio": 1500.0,
-        "Stock": 19
+        "Stock": 7
     },
     {
         "ID": "P002",
@@ -12,5 +12,12 @@
         "Seccion": "Lacteos",
         "Precio": 3200.0,
         "Stock": 5
+    },
+    {
+        "ID": "P003",
+        "Nombre": "pollo",
+        "Seccion": "carnes",
+        "Precio": 12000.0,
+        "Stock": 20
     }
 ]

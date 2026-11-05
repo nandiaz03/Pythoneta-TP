@@ -25,7 +25,9 @@ from funciones.autenticacion_roles import (
 from funciones.stock import (
     agregar_stock, 
     consultar_stock, 
-    eliminar_stock
+    eliminar_stock,
+    agregar_producto,
+    _generar_id
 )
 
 from funciones.ventas_y_cobros import (
@@ -67,6 +69,8 @@ def pedir_numero(mensaje: str) -> float | None:
     except ValueError:
         print(Fore.RED + "Debe ingresar un número válido.")
         return None
+
+
 #-----------------------------------------------------------
 #                       MENÚ ADMINISTRADOR
 #-----------------------------------------------------------
@@ -81,6 +85,7 @@ def opcion_admin()->None:
     print("3. Eliminar/Modificar Stock")
     print("4. Reporte de Ventas del dia")
     print("5. Reporte de ventas del mes")
+    print("6. Agregar producto nuevo")
     print("0. Volver al login")
     
 def menu_admin()->None:
@@ -105,6 +110,9 @@ def menu_admin()->None:
             mes = pedir_entero("Mes: ")
             if mes is not None:
                 reportes_ventas_mes(mes)
+        elif opcion == "6":
+            producto = input("Nombre del producto nuevo: ")
+            agregar_producto(producto)
         elif opcion == "0":
             print("Cerrando sesion de administrador...")
         else: 
