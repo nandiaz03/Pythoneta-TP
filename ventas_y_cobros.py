@@ -1,5 +1,3 @@
-# -cargar_producto_carrito(ID_producto, cantidad)
-# Valida la disponibilidad y añade un producto al carrito de compras actual.
 import json
 from sistema_ventas import leer_archivo, escribir_archivo, descontar_uni
 
