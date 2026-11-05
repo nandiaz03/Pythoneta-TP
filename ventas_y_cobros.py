@@ -85,16 +85,16 @@ def tipo_de_pago() -> tuple[str, int]:
     metodos_de_pago = ("Efectivo", "Billetera virtual", "Tarjeta de Débito/Crédito")
     descuentos  = (10, 5, 0)
     print("Seleccione su método de pago.")
-    metodo = int(input("Ingresar método(0-Efectivo, 1-Billetera virtual, 2- Tarjeta de Débito/Crédito): "))
+    metodo = -1
     while metodo not in (0, 1, 2):
-        metodo = int(input("Ingresar método(0-Efectivo, 1-Billetera virtual, 2- Tarjeta de Débito/Crédito): "))
-        if metodo in (0, 1, 2):
-            break
+        try:
+            metodo = int(input("Ingresar método(0-Efectivo, 1-Billetera virtual, 2- Tarjeta de Débito/Crédito): "))
+            if metodo not in(0, 1, 2):
+                print("Opción inválida. Intente nuevamente")
+        except ValueError:
+            print("Debe ingresar un número(0, 1 o 2)")        
 
-    # Busca el índice elegido y devuelve el método con su descuento
-    for p, _ in enumerate(metodos_de_pago):
-        if p == metodo:
-            return metodos_de_pago[p], descuentos[p]
+    return metodos_de_pago[metodo], descuentos[metodo]
 
 
 def calcular_total_compra(carrito: list[tuple[str, str, int, float]], descuento: int) -> float:
@@ -156,7 +156,7 @@ def cerrar_venta(confirmacion: str, ID: str, cantidad: int) -> None:
         print("Venta cancelada.")
         
 def emision_ticket(carrito: list[tuple[str, str, int, float]], metodo: str, descuento: int,
-                   total: float, vuelto: float, monto: float = 0.0) -> None:
+                   total: float, vuelto: float, monto: float | None = None) -> None:
     """
     Imprime por consola el ticket de la venta realizada.
     Contrato:
