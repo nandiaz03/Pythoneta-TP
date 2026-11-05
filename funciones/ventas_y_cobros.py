@@ -1,6 +1,4 @@
-import json
-from archivos import leer_archivo, escribir_archivo
-from stock import descontar_uni
+from funciones.stock import descontar_uni
 
 def buscar_producto(productos: list[dict], ID_producto: str) -> bool:
     """
@@ -31,6 +29,7 @@ def validar_stock_productos(productos: list[dict], ID_producto: str, cantidad: i
         if producto["ID"] == ID_producto:
             # Compara el stock disponible con la cantidad solicitada
             return producto["Stock"] >= cantidad
+    return False
 
 def cargar_producto_carrito(productos: list[dict], ID_producto: str, cantidad: int) -> tuple[str, str, int, float]:
     """

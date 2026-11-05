@@ -1,12 +1,16 @@
-import os 
-from colorama import init, Fore, Style
-init(autoreset=True)
+import os
 
-import json
+try:
+    from colorama import init, Fore, Style
+    init(autoreset=True)
+except ImportError:
+    # Si colorama no está instalado el programa funciona igual, sin colores.
+    class _SinColor:
+        def __getattr__(self, nombre):
+            return ""
+    Fore = Style = _SinColor()
 
-from archivos import leer_archivo, escribir_archivo
-RUTA_USUARIOS = "data/usuarios.json"
-RUTA_TURNO = "data/turno_caja.json"
+from archivos import leer_archivo, RUTA_PRODUCTOS
 
 from funciones.autenticacion_roles import (
     cargar_usuarios,
@@ -45,6 +49,24 @@ from funciones.reportes import (
 
 def limpiar_pantalla():
     os.system("cls" if os.name == "nt" else "clear")
+
+
+def pedir_entero(mensaje: str) -> int | None:
+    """Pide un entero por consola. Devuelve None si el texto no es un entero válido."""
+    try:
+        return int(input(mensaje).strip())
+    except ValueError:
+        print(Fore.RED + "Debe ingresar un número entero.")
+        return None
+
+
+def pedir_numero(mensaje: str) -> float | None:
+    """Pide un número por consola. Devuelve None si el texto no es un número válido."""
+    try:
+        return float(input(mensaje).strip().replace(",", "."))
+    except ValueError:
+        print(Fore.RED + "Debe ingresar un número válido.")
+        return None
 #-----------------------------------------------------------
 #                       MENÚ ADMINISTRADOR
 #-----------------------------------------------------------
@@ -76,11 +98,13 @@ def menu_admin()->None:
             producto = input("producto: ")
             eliminar_stock(producto)
         elif opcion == "4": 
-            dia = int(input("Dia: "))
-            reporte_ventas_dia(dia) 
+            dia = pedir_entero("Dia: ")
+            if dia is not None:
+                reporte_ventas_dia(dia)
         elif opcion == "5":
-            mes = int(input("Mes: "))
-            reportes_ventas_mes(mes)
+            mes = pedir_entero("Mes: ")
+            if mes is not None:
+                reportes_ventas_mes(mes)
         elif opcion == "0":
             print("Cerrando sesion de administrador...")
         else: 
@@ -99,28 +123,33 @@ def opcion_cajero()->None:
     print("0. Cerrar turno")
 
 def menu_cajero()->None:
-    saldo_base = float(input("Saldo inicial: "))
-    registrar_apertura_caja(saldo_base) 
+    saldo_base = None
+    while saldo_base is None or not registrar_apertura_caja(saldo_base):
+        saldo_base = pedir_numero("Saldo inicial: ")
     opcion = "-1" 
     while opcion != "0":
         opcion_cajero()
         opcion = input("Ingrese una opcion: ").strip()
         if opcion == "1": 
             carrito = []
-            catalogo = leer_archivo("data/productos.json")
+            catalogo = leer_archivo(RUTA_PRODUCTOS)
             continuar_compra = "si"
             while continuar_compra.lower() == "si":
-                id_prod = input("Codigo/ID de producto: ").strip()
+                id_prod = input("Codigo/ID de producto: ").strip().upper()
                 if not buscar_producto(catalogo, id_prod):
                     print("El producto no existe en el catálogo.")
                     continue
                 
-                cantidad = int(input("Cantidad: "))
+                cantidad = pedir_entero("Cantidad: ")
+                if cantidad is None:
+                    continue
                 if cantidad <= 0: 
                     print("La cantidad debe ser positiva.")
                     continue
                 
-                if not validar_stock_productos(catalogo, id_prod, cantidad):
+                # Se suma lo que ya hay en el carrito del mismo producto para no pasarse del stock
+                ya_en_carrito = sum(i[2] for i in carrito if i[0] == id_prod)
+                if not validar_stock_productos(catalogo, id_prod, cantidad + ya_en_carrito):
                     print("Stock insuficiente.")
                     continue
                 
@@ -131,14 +160,16 @@ def menu_cajero()->None:
             if carrito: 
                 metodo_nombre, descuento_porc = tipo_de_pago()
                 total = calcular_total_compra(carrito, descuento_porc)
-                print(f"Total a pagar: ${total: .2f}")
+                print(f"Total a pagar: ${total:.2f}")
                 monto_entregado = None
                 vuelto = None
                     
                 if metodo_nombre == "Efectivo":
                     pago_valido = False
                     while not pago_valido:
-                        monto_entregado = float(input("Monto entregado: "))
+                        monto_entregado = pedir_numero("Monto entregado: ")
+                        if monto_entregado is None:
+                            continue
                         pago_valido = validar_monto(monto_entregado, total)
                     vuelto = calcular_vuelto(monto_entregado, total)
                     print(f"Vuelto: ${vuelto:.2f}")
@@ -146,7 +177,7 @@ def menu_cajero()->None:
                 confirmacion = input("¿Confirmar venta? (si/no): ")
                 if confirmacion.lower().strip() == "si":
                     for item in carrito: 
-                        cerrar_venta("si", id_prod, cantidad)
+                        cerrar_venta("si", item[0], item[2])
                     registrar_venta(total, metodo_nombre)
                     emision_ticket(carrito, metodo_nombre, descuento_porc, total, vuelto, monto_entregado)
                 else: 
@@ -154,7 +185,11 @@ def menu_cajero()->None:
             else: 
                 print(Fore.LIGHTYELLOW_EX + "El carrito está vacío...")
         elif opcion == "0":
-            saldo_final = float(input("Efectivo contado en caja: "))
+            saldo_final = None
+            while saldo_final is None or saldo_final < 0:
+                saldo_final = pedir_numero("Efectivo contado en caja: ")
+                if saldo_final is not None and saldo_final < 0:
+                    print(Fore.RED + "El efectivo no puede ser negativo.")
             esperado = saldo_base + total_efectivo_hoy()
             diferencia = cierre_caja(esperado, saldo_final)
             print(f"Diferencia de arqueo: ${diferencia:.2f}")

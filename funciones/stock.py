@@ -1,4 +1,4 @@
-from archivos import leer_archivo, escribir_archivo
+from archivos import leer_archivo, escribir_archivo, RUTA_PRODUCTOS
 
 def consultar_stock(seccion: str) -> None:
     """
@@ -12,13 +12,13 @@ def consultar_stock(seccion: str) -> None:
     Postcondición:
         - Muestra en pantalla los productos correspondientes.
     """
-    f = leer_archivo("productos.json")
+    f = leer_archivo(RUTA_PRODUCTOS)
     verificador = False #El verificador sirve para indicar si existe algun producto en esa seccion
 
     for dic in f:
-            if dic["Seccion"] == seccion:
+            if dic["Seccion"].lower() == seccion.strip().lower():
                 verificador = True
-                print(f"Producto: {dic['Nombre']}", end="")
+                print(f"Producto: {dic['Nombre']} - ", end="")
                 if dic["Stock"] == 0:
                     print("No hay stock!")
 
@@ -45,10 +45,10 @@ def agregar_stock(producto: str) -> None:
         - En caso de no existir el producto ingresado en el archivo 'productos.json', se realiza un print que
         informa que no existe el producto.
     """
-    f = leer_archivo("productos.json")
+    f = leer_archivo(RUTA_PRODUCTOS)
     for dic in f:
-        if producto == dic["Nombre"]:
-            print(f"El producto {producto} tiene {dic['Stock']} stock.")
+        if producto.strip().lower() == dic["Nombre"].lower():
+            print(f"El producto {dic['Nombre']} tiene {dic['Stock']} stock.")
             while True:
                 try:
                     nuevo_stock = int(input("Ingrese la cantidad de stock que quiere añadir al producto: "))
@@ -64,7 +64,7 @@ def agregar_stock(producto: str) -> None:
                     dic["Stock"] += nuevo_stock
                     break
 
-            escribir_archivo("productos.json", f)
+            escribir_archivo(RUTA_PRODUCTOS, f)
             return
 
     print("No existe ese producto.")
@@ -83,11 +83,11 @@ def eliminar_stock(producto: str) -> None:
         - En caso de no existir el producto ingresado en el archivo 'productos.json', se realiza un print que
         informa que no existe el producto.
     """
-    f = leer_archivo("productos.json")
+    f = leer_archivo(RUTA_PRODUCTOS)
 
     for dic in f:
-        if producto == dic["Nombre"]:
-            print(f"El producto {producto} tiene {dic['Stock']} stock.")
+        if producto.strip().lower() == dic["Nombre"].lower():
+            print(f"El producto {dic['Nombre']} tiene {dic['Stock']} stock.")
             while True:
                 try:
                     nuevo_stock = int(input("Ingrese la cantidad de stock que quiere reducir del producto: "))
@@ -108,7 +108,7 @@ def eliminar_stock(producto: str) -> None:
                         dic["Stock"] -= nuevo_stock
                     break
 
-            escribir_archivo("productos.json", f)
+            escribir_archivo(RUTA_PRODUCTOS, f)
             return
 
     print("No existe ese producto.")
@@ -127,9 +127,9 @@ def descontar_uni(producto: str, cantidad: int) -> None:
         - Actualiza el archivo json descontando del producto indicado el stock equivalente a la venta realizada.
         - Retorna
     """
-    f = leer_archivo("productos.json")
+    f = leer_archivo(RUTA_PRODUCTOS)
     for dic in f:
         if producto == dic["ID"]:
-            dic["Stock"] -= cantidad            
-            escribir_archivo("productos.json", f)
-            break
+            dic["Stock"] = max(0, dic["Stock"] - cantidad)
+            escribir_archivo(RUTA_PRODUCTOS, f)
+            break

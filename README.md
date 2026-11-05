@@ -16,33 +16,35 @@ Proyecto desarrollado en Python para administrar el stock de productos y registr
 ## Requisitos
 
 - Python 3.10 o superior (el código utiliza anotaciones de tipo como `float | None`).
-- No requiere instalar bibliotecas externas: utiliza módulos incluidos en Python.
+- Opcional: `colorama` para ver los colores en la consola (`pip install colorama`). Si no está instalado, el programa funciona igual, sin colores.
 
 ## Archivos del proyecto
 
 | Archivo | Responsabilidad |
 |---|---|
 | `sistema_ventas.py` | Punto de entrada y menús principales. |
-| `archivos.py` | Lectura y escritura de archivos JSON. |
-| `autenticacion_roles.py` | Usuarios, autenticación, roles y operaciones de caja. |
-| `stock.py` | Consulta y modificación del inventario. |
-| `ventas_y_cobros.py` | Carrito, métodos de pago, cálculos y emisión de tickets. |
-| `Reportes.py` | Registro de ventas y reportes de recaudación. |
-| `usuarios.json` | Usuarios y roles registrados. |
-| `turno_caja.json` | Estado y saldos del turno de caja. |
-| `productos.json` | Catálogo de productos e inventario (debe crearse). |
-| `ventas.json` | Historial de ventas (se crea al registrar la primera venta). |
+| `archivos.py` | Lectura/escritura de JSON y rutas de los archivos de datos. |
+| `funciones/autenticacion_roles.py` | Usuarios, autenticación, roles y operaciones de caja. |
+| `funciones/stock.py` | Consulta y modificación del inventario. |
+| `funciones/ventas_y_cobros.py` | Carrito, métodos de pago, cálculos y emisión de tickets. |
+| `funciones/reportes.py` | Registro de ventas y reportes de recaudación. |
+| `data/usuarios.json` | Usuarios y roles registrados. |
+| `data/turno_caja.json` | Estado y saldos del turno de caja. |
+| `data/productos.json` | Catálogo de productos e inventario. |
+| `data/ventas.json` | Historial de ventas. |
 
 ## Cómo ejecutar
 
 1. Descargar o clonar el repositorio.
 2. Abrir una terminal en la carpeta del proyecto.
-3. Verificar que exista `productos.json` y que tenga productos con las claves que utiliza el programa.
+3. Verificar que exista `data/productos.json` y que tenga productos con las claves que utiliza el programa.
 4. Ejecutar:
 
 ```bash
 python sistema_ventas.py
 ```
+
+Se puede ejecutar desde cualquier carpeta: las rutas de los datos se calculan a partir de la ubicación del proyecto.
 
 En algunos equipos puede ser necesario utilizar `python3` en lugar de `python`.
 
@@ -86,6 +88,4 @@ Son credenciales de demostración. No deben utilizarse así en un sistema real: 
 
 ## Estado y consideraciones
 
-Esta versión es un proyecto académico y utiliza archivos JSON como almacenamiento local. Antes de ejecutar el flujo completo de ventas, hay que corregir algunos detalles pendientes del código, entre ellos la función `abrir_json()` que se importa desde `ventas_y_cobros.py` pero no está definida, y el flujo de confirmación y cobro dentro de `menu_cajero()`.
-
-También se debe revisar el filtrado del reporte mensual para que tenga en cuenta el mes y el año seleccionados, y validar que las cantidades ingresadas sean positivas.
+Esta versión es un proyecto académico y utiliza archivos JSON como almacenamiento local. El flujo completo (login, stock, venta con descuento y ticket, apertura/cierre de caja y reportes) fue probado de punta a punta.

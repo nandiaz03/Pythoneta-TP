@@ -1,7 +1,5 @@
 from datetime import date
-from archivos import leer_archivo, escribir_archivo
-
-RUTA_VENTAS = "ventas.json"
+from archivos import leer_archivo, escribir_archivo, RUTA_VENTAS
 
 
 def registrar_venta(total: float, metodo: str) -> None:
@@ -92,4 +90,4 @@ def total_efectivo_hoy() -> float:
     """
     hoy = date.today().isoformat()
     return sum(v["total"] for v in leer_archivo(RUTA_VENTAS)
-               if v["fecha"] == hoy and v["metodo"] == "Efectivo")
+               if v["fecha"] == hoy and v["metodo"] == "Efectivo")

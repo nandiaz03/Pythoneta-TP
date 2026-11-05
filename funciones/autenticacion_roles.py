@@ -1,8 +1,5 @@
 from datetime import date
-from archivos import leer_archivo, escribir_archivo
-
-RUTA_USUARIOS = "data/usuarios.json"
-RUTA_TURNO = "data/turno_caja.json"
+from archivos import leer_archivo, escribir_archivo, RUTA_USUARIOS, RUTA_TURNO
 
 
 def cargar_usuarios() -> dict:
@@ -17,7 +14,7 @@ def cargar_usuarios() -> dict:
     """
     usuarios= leer_archivo(RUTA_USUARIOS)
     
-    if not usuarios:
+    if not usuarios or not isinstance(usuarios, dict):
         usuarios_default: dict = {
             "nandiaz": {"clave": "1234", "rol": "admin"},
             "ibattelli": {"clave": "4321", "rol": "cajero"},
@@ -156,4 +153,4 @@ def cierre_caja(saldo_base: float, saldo_final: float) -> float:
 
     escribir_archivo(RUTA_TURNO, datos_cierre)
     
-    return diferencia
+    return diferencia
