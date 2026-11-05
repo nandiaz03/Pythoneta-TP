@@ -34,7 +34,7 @@ from ventas_y_cobros import (
     emision_ticket,
 )
 
-from Reportes import (
+from reportes import (
     reporte_ventas_dia,
     reportes_ventas_mes,
     registrar_venta,

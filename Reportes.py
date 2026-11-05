@@ -42,7 +42,7 @@ def reporte_ventas_dia(dia: int) -> None:
     ventas_dia = [v for v in leer_archivo(RUTA_VENTAS) if v["fecha"] == fecha]
     total = sum(v["total"] for v in ventas_dia)
 
-    print(f"\n--- REPORTE DÍA {dia:02d}/{hoy.month:02d}/{hoy.year} ---")
+    print(f"\n--- REPORTE DÍA {dia}/{hoy.month}/{hoy.year} ---")
     if not ventas_dia:
         print("No hay ventas registradas para ese día.")
     else:
