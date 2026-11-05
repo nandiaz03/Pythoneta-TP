@@ -1,6 +1,6 @@
 {
-    "estado": "abierta",
+    "estado": "cerrada",
     "saldo_base": 12000.0,
-    "saldo_final": null,
-    "diferencia": null
+    "saldo_final": 12000.0,
+    "diferencia": 0.0
 }

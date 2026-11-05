@@ -1,16 +1,16 @@
 [
     {
-        "ID": "P001", 
-        "nombre": "Leche",
-        "seccion": "Lacteos",
-        "precio": 1500.0,
-        "stock": 20
+        "ID": "P001",
+        "Nombre": "Leche",
+        "Seccion": "Lacteos",
+        "Precio": 1500.0,
+        "Stock": 19
     },
     {
-       "ID": "P002", 
-        "nombre": "Queso",
-        "seccion": "Lacteos",
-        "precio": 3200.0,
-        "stock": 8 
+        "ID": "P002",
+        "Nombre": "Queso",
+        "Seccion": "Lacteos",
+        "Precio": 3200.0,
+        "Stock": 5
     }
 ]
