@@ -98,7 +98,7 @@ def cajero_fecha(dia: int, mes: int, anio: int) -> bool:
         return True
     except ValueError:
         print("La fecha ingresada no existe.")
-        return
+        return False
 
 def registrar_apertura_caja(saldo_base: float) -> bool:
     """Registra el monto inicial de efectivo disponible al abrir la jornada o turno.

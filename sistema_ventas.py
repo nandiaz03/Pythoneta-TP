@@ -1,7 +1,6 @@
 import json
 
 from archivos import leer_archivo, escribir_archivo
-
 RUTA_USUARIOS = "usuarios.json"
 RUTA_TURNO = "turno_caja.json"
 
@@ -22,7 +21,6 @@ from stock import (
 )
 
 from ventas_y_cobros import (
-    abrir_json,
     buscar_producto,
     validar_stock_productos,
     cargar_producto_carrito,
@@ -103,7 +101,7 @@ def menu_cajero()->None:
         opcion = input("Ingrese una opcion: ").strip()
         if opcion == "1": 
             carrito = []
-            catalogo = abrir_json()
+            catalogo = leer_archivo(productos.json)
             continuar_compra = "si"
             while continuar_compra.lower() == "si":
                 id_prod = input("Codigo/ID de producto: ").strip()
@@ -112,6 +110,10 @@ def menu_cajero()->None:
                     continue
                 
                 cantidad = int(input("Cantidad: "))
+                if cantidad <= 0: 
+                    print("La cantidad debe ser positiva.")
+                    continue
+                
                 if not validar_stock_productos(catalogo, id_prod, cantidad):
                     print("Stock insuficiente.")
                     continue
@@ -136,11 +138,11 @@ def menu_cajero()->None:
                         print(f"Vuelto: ${vuelto:.2f}")
                         confirmacion = input("¿Confirmar venta? (si/no): ")
                 
-                if confirmacion.lower().strip() == "si":
-                    for item in carrito: 
-                        id_prod = item[0]
-                        cantidad = item[2]
-                        cerrar_venta("si", id_prod, cantidad)
+            if confirmacion.lower().strip() == "si":
+                for item in carrito: 
+                    id_prod = item[0]
+                    cantidad = item[2]
+                    cerrar_venta("si", id_prod, cantidad)
                     registrar_venta(total, metodo_nombre)
                     emision_ticket(carrito, metodo_nombre, descuento_porc, total, vuelto, monto_entregado)
                 else: 

@@ -65,7 +65,7 @@ def reportes_ventas_mes(mes: int) -> None:
         return
 
     anio = date.today().year
-    ventas_mes = [v for v in leer_archivo(RUTA_VENTAS) if v["fecha"]]
+    ventas_mes = [v for v in leer_archivo(RUTA_VENTAS) if date.fromisoformat(v["fecha"]).month == mes and date.fromisoformat(v["fecha"]).year == anio]
 
     print(f"\n--- REPORTE MES {mes}/{anio} ---")
     if not ventas_mes:
