@@ -1,7 +1,7 @@
 from datetime import date
 from archivos import leer_archivo, escribir_archivo
 
-RUTA_USUARIOS = "usuarios.json"
+RUTA_USUARIOS =  "usuarios.json"
 RUTA_TURNO = "turno_caja.json"
 
 

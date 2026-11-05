@@ -12,7 +12,7 @@ def consultar_stock(seccion: str) -> None:
     Postcondición:
         - Muestra en pantalla los productos correspondientes.
     """
-    f = leer_archivo("productos.json")
+    f = leer_archivo("data/productos.json")
     verificador = False #El verificador sirve para indicar si existe algun producto en esa seccion
 
     for dic in f:
@@ -45,7 +45,7 @@ def agregar_stock(producto: str) -> None:
         - En caso de no existir el producto ingresado en el archivo 'productos.json', se realiza un print que
         informa que no existe el producto.
     """
-    f = leer_archivo("productos.json")
+    f = leer_archivo("data/productos.json")
     for dic in f:
         if producto == dic["Nombre"]:
             print(f"El producto {producto} tiene {dic['Stock']} stock.")
@@ -64,7 +64,7 @@ def agregar_stock(producto: str) -> None:
                     dic["Stock"] += nuevo_stock
                     break
 
-            escribir_archivo("productos.json", f)
+            escribir_archivo("data/productos.json", f)
             return
 
     print("No existe ese producto.")
@@ -83,7 +83,7 @@ def eliminar_stock(producto: str) -> None:
         - En caso de no existir el producto ingresado en el archivo 'productos.json', se realiza un print que
         informa que no existe el producto.
     """
-    f = leer_archivo("productos.json")
+    f = leer_archivo("data/productos.json")
 
     for dic in f:
         if producto == dic["Nombre"]:
@@ -108,7 +108,7 @@ def eliminar_stock(producto: str) -> None:
                         dic["Stock"] -= nuevo_stock
                     break
 
-            escribir_archivo("productos.json", f)
+            escribir_archivo("data/productos.json", f)
             return
 
     print("No existe ese producto.")
@@ -127,9 +127,9 @@ def descontar_uni(producto: str, cantidad: int) -> None:
         - Actualiza el archivo json descontando del producto indicado el stock equivalente a la venta realizada.
         - Retorna
     """
-    f = leer_archivo("productos.json")
+    f = leer_archivo("data/productos.json")
     for dic in f:
         if producto == dic["ID"]:
             dic["Stock"] -= cantidad            
-            escribir_archivo("productos.json", f)
+            escribir_archivo("data/productos.json", f)
             break

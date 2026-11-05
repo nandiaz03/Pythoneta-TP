@@ -1,6 +1,6 @@
 import json
 from archivos import leer_archivo, escribir_archivo
-from stock import descontar_uni
+from funciones.stock import descontar_uni
 
 def buscar_producto(productos: list[dict], ID_producto: str) -> bool:
     """

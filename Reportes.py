@@ -1,7 +1,7 @@
 from datetime import date
 from archivos import leer_archivo, escribir_archivo
 
-RUTA_VENTAS = "ventas.json"
+RUTA_VENTAS = "data/ventas.json"
 
 
 def registrar_venta(total: float, metodo: str) -> None:

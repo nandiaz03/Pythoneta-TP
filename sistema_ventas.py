@@ -5,10 +5,10 @@ init(autoreset=True)
 import json
 
 from archivos import leer_archivo, escribir_archivo
-RUTA_USUARIOS = "usuarios.json"
-RUTA_TURNO = "turno_caja.json"
+RUTA_USUARIOS = "data/usuarios.json"
+RUTA_TURNO = "data/turno_caja.json"
 
-from autenticacion_roles import (
+from funciones.autenticacion_roles import (
     cargar_usuarios,
     pedir_credenciales,
     iniciar_sesion,
@@ -18,13 +18,13 @@ from autenticacion_roles import (
     cierre_caja,
 )
 
-from stock import (
+from funciones.stock import (
     agregar_stock, 
     consultar_stock, 
     eliminar_stock
 )
 
-from ventas_y_cobros import (
+from funciones.ventas_y_cobros import (
     buscar_producto,
     validar_stock_productos,
     cargar_producto_carrito,
@@ -36,7 +36,7 @@ from ventas_y_cobros import (
     emision_ticket,
 )
 
-from reportes import (
+from funciones.reportes import (
     reporte_ventas_dia,
     reportes_ventas_mes,
     registrar_venta,
@@ -107,7 +107,7 @@ def menu_cajero()->None:
         opcion = input("Ingrese una opcion: ").strip()
         if opcion == "1": 
             carrito = []
-            catalogo = leer_archivo("productos.json")
+            catalogo = leer_archivo("data/productos.json")
             continuar_compra = "si"
             while continuar_compra.lower() == "si":
                 id_prod = input("Codigo/ID de producto: ").strip()
