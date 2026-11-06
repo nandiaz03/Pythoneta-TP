@@ -29,7 +29,6 @@ def validar_stock_productos(productos: list[dict], ID_producto: str, cantidad: i
         if producto["ID"] == ID_producto:
             # Compara el stock disponible con la cantidad solicitada
             return producto["Stock"] >= cantidad
-    return False
 
 def cargar_producto_carrito(productos: list[dict], ID_producto: str, cantidad: int) -> tuple[str, str, int, float]:
     """
@@ -60,17 +59,16 @@ def tipo_de_pago() -> tuple[str, int]:
     metodos_de_pago = ("Efectivo", "Billetera virtual", "Tarjeta de Débito/Crédito")
     descuentos  = (10, 5, 0)
     print("Seleccione su método de pago.")
-    metodo = -1
-    while metodo not in (0, 1, 2):
+    while True:
         try:
             metodo = int(input("Ingresar método(0-Efectivo, 1-Billetera virtual, 2- Tarjeta de Débito/Crédito): "))
             if metodo not in(0, 1, 2):
                 print("Opción inválida. Intente nuevamente")
+            else:
+                return metodos_de_pago[metodo], descuentos[metodo]
+            
         except ValueError:
             print("Debe ingresar un número(0, 1 o 2)")        
-
-    return metodos_de_pago[metodo], descuentos[metodo]
-
 
 def calcular_total_compra(carrito: list[tuple[str, str, int, float]], descuento: int) -> float:
     """
@@ -81,13 +79,8 @@ def calcular_total_compra(carrito: list[tuple[str, str, int, float]], descuento:
         Post: - Devuelve la suma de cantidad * Precio de cada ítem,
                 menos el porcentaje de descuento.
     """
-    total = 0
-    # Suma el subtotal (cantidad * precio) de cada producto del carrito
-    for producto in carrito:
-        subtotal = producto[2] * producto[3]
-        total += subtotal
-    # Aplica el descuento porcentual sobre el total
-    total -= total * descuento / 100
+    total = sum(producto[2] * producto[3] for producto in carrito) * (1 - descuento / 100)
+
     return total
 
 def validar_monto(monto: float, total: float) -> bool:
